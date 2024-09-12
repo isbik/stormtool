@@ -1,6 +1,5 @@
 "use client";
 
-import { Sidebar } from "@/shared/ui/sidebar";
 import { useState } from "react";
 
 const URLComponent = ({ value }: { value: string }) => {
@@ -71,19 +70,15 @@ export default function Home() {
   );
 
   return (
-    <main className="flex gap-4 grow min-h-screen">
-      <Sidebar />
-
-      <div className="w-full grow p-2 overflow-hidden">
-        <p>Enter url</p>
-        <input
-          className="border w-full p-2"
-          placeholder="Enter url"
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
-        />
-        <URLComponent value={value} />
-      </div>
-    </main>
+    <div className="w-full grow p-2 overflow-hidden">
+      <p>Enter url</p>
+      <input
+        className="border w-full p-2"
+        placeholder="Enter url"
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+      />
+      <URLComponent value={value} />
+    </div>
   );
 }

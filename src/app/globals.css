@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 body {
-  @apply h-screen bg-slate-100;
+  @apply h-screen;
+}
+
+.monaco-editor {
+  padding-top: 15px;
 }
