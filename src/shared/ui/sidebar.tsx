@@ -46,7 +46,7 @@ export const Sidebar = (props: Props) => {
   console.log("🚀 ~ Sidebar ~ pathname:", pathname);
 
   return (
-    <div className="max-w-64 border-r border-r-slate-200 block w-full shrink-0">
+    <div className="max-w-64 w-full shrink-0 bg-slate-900/80 text-white">
       <h1 className="p-2 font-bold text-lg text-center">
         <Link href="/">Storm Tool</Link>
       </h1>
@@ -56,8 +56,8 @@ export const Sidebar = (props: Props) => {
           <Link
             href={`/${tool.url}`}
             className={cn(
-              "block p-2 border-l-4",
-              pathname === `/${tool.url}` && "border-l-blue-500 bg-blue-100"
+              "block p-2 border-l-4 border-transparent",
+              pathname === `/${tool.url}` && "border-l-blue-500 bg-slate-800"
             )}
             key={tool.url}
           >

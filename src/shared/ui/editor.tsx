@@ -1,7 +1,9 @@
 import { EditorProps } from "@monaco-editor/react";
 import copy from "clipboard-copy";
+import { Delete, Trash, WandSparkles } from "lucide-react";
 import dynamic from "next/dynamic";
 import React, { useCallback, useEffect, useState } from "react";
+import { getWorker } from "../lib/worker-wrapper";
 
 export interface EditorPanelProps {
   editable?: boolean;
@@ -70,6 +72,22 @@ export function EditorPanel({
     if (value) copy(value);
   }, [value]);
 
+  const onPrettier = useCallback(async () => {
+    if (value) {
+      const prettierWorker = getWorker(
+        new Worker(new URL("../../workers/prettier.worker.ts", import.meta.url))
+      );
+
+      const prettyValue = await prettierWorker.send({
+        value: value,
+        language: language === "postcss" ? "css" : language,
+      }); // prettier
+
+      setValue(prettyValue);
+      onChange?.(prettyValue);
+    }
+  }, [value, language]);
+
   // whenever defaultValue changes, change the value of the editor.
   useEffect(() => {
     setValue(defaultValue);
@@ -85,10 +103,20 @@ export function EditorPanel({
         {hasClear && (
           <button
             type="button"
-            className="h-12 bg-red-300 text-white mr-4"
+            className="h-12 text-black mr-4"
+            onClick={onPrettier}
+          >
+            <WandSparkles />
+          </button>
+        )}
+
+        {hasClear && (
+          <button
+            type="button"
+            className="h-12 text-black"
             onClick={() => setValue("")}
           >
-            Clean
+            <Trash />
           </button>
         )}
 
