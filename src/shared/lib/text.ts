@@ -47,3 +47,50 @@ export const toKebabCase = (text: string): string => {
   const kebabCaseWords = words.map((word) => word.toLowerCase());
   return kebabCaseWords.join("-");
 };
+
+export const toSlug = (text: string): string => {
+  const translitMap = {
+    а: "a",
+    б: "b",
+    в: "v",
+    г: "g",
+    д: "d",
+    е: "e",
+    ё: "e",
+    ж: "zh",
+    з: "z",
+    и: "i",
+    й: "y",
+    к: "k",
+    л: "l",
+    м: "m",
+    н: "n",
+    о: "o",
+    п: "p",
+    р: "r",
+    с: "s",
+    т: "t",
+    у: "u",
+    ф: "f",
+    х: "kh",
+    ц: "ts",
+    ч: "ch",
+    ш: "sh",
+    щ: "sch",
+    ы: "y",
+    э: "e",
+    ю: "yu",
+    я: "ya",
+  } as Record<string, string>;
+
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/[а-яё]/g, (char) => translitMap[char] || char) // Транслитерация русских букв
+    .replace(/\s+/g, "-") // Заменяем пробелы на дефисы
+    .replace(/[^\w\-]+/g, "") // Удаляем не буквы, цифры и дефисы
+    .replace(/\-\-+/g, "-") // Убираем множественные дефисы
+    .replace(/^-+/, "") // Убираем дефисы в начале строки
+    .replace(/-+$/, "");
+};

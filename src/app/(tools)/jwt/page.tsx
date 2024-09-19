@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { Input } from "@/shared/ui/input";
+import { Card } from "@/shared/ui/card";
 
 const JWTComponent = ({ value }: { value: string }) => {
   try {
@@ -13,32 +15,28 @@ const JWTComponent = ({ value }: { value: string }) => {
 
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mt-2">
-        <div className="bg-[#F7F7F7] p-4 rounded-lg border border-[#E5E5E5]">
-          <h2 className="text-2xl font-bold text-[#333] border-b border-[#E5E5E5] pb-2 mb-4">
-            Header
-          </h2>
+        <Card className="p-4">
+          <h2 className="text-2xl font-bold pb-2">Header</h2>
           <ul className="">
             {headerEntries.map(([key, value]) => (
               <li key={key} className="flex items-center mb-2">
                 <span className="font-bold text-[#0074D9]">{key}</span>:&nbsp;
-                <span className="text-[#333]">{value}</span>
+                <span className="">{value}</span>
               </li>
             ))}
           </ul>
-        </div>
-        <div className="bg-[#F7F7F7] p-4 rounded-lg border border-[#E5E5E5]">
-          <h2 className="text-2xl font-bold text-[#333] border-b border-[#E5E5E5] pb-2 mb-4">
-            Payload
-          </h2>
+        </Card>
+        <Card className="p-4">
+          <h2 className="text-2xl font-bold pb-2">Payload</h2>
           <ul className="">
             {payloadEntries.map(([key, value]) => (
               <li key={key} className="flex items-center mb-2">
                 <span className="font-bold text-[#2ECC40]">{key}</span>:&nbsp;
-                <span className="text-[#333]">{value}</span>
+                <span className="">{value}</span>
               </li>
             ))}
           </ul>
-        </div>
+        </Card>
       </div>
     );
   } catch {
@@ -67,8 +65,8 @@ export default function Home() {
 
   return (
     <div className="w-full grow p-2 overflow-hidden">
-      <p>Enter JWT token</p>
-      <input
+      <p className="text-sm font-medium">JWT Token</p>
+      <Input
         className="border w-full p-2"
         placeholder="Enter JWT token"
         value={value}

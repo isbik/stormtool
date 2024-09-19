@@ -1,4 +1,4 @@
-import * as data from "@/shared/constants/data";
+import * as data from "@/shared/data/code-placeholders";
 import { useSessionStorage } from "./use-session-store";
 
 export type Language = keyof typeof data;

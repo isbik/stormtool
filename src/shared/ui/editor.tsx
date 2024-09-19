@@ -1,9 +1,10 @@
 import { EditorProps } from "@monaco-editor/react";
 import copy from "clipboard-copy";
-import { Delete, Trash, WandSparkles } from "lucide-react";
+import { Copy, CopyCheck, Delete, Trash, WandSparkles } from "lucide-react";
 import dynamic from "next/dynamic";
 import React, { useCallback, useEffect, useState } from "react";
 import { getWorker } from "../lib/worker-wrapper";
+import { useCopy } from "../hooks/use-copy";
 
 export interface EditorPanelProps {
   editable?: boolean;
@@ -43,7 +44,6 @@ export function EditorPanel({
 }: EditorPanelProps) {
   const [showSettingsDialogue, setSettingsDialog] = useState(false);
   const [value, setValue] = useState(defaultValue);
-  const [fetchingUrl, setFetchingUrl] = useState("");
 
   const options = {
     fontSize: 14,
@@ -63,14 +63,7 @@ export function EditorPanel({
     [showSettingsDialogue]
   );
 
-  useEffect(() => {
-    // @ts-ignore
-    window.__webpack_public_path__ = "/_next/static/";
-  }, []);
-
-  const copyValue = useCallback(() => {
-    if (value) copy(value);
-  }, [value]);
+  const { onCopy, isCopied } = useCopy();
 
   const onPrettier = useCallback(async () => {
     if (value) {
@@ -81,51 +74,46 @@ export function EditorPanel({
       const prettyValue = await prettierWorker.send({
         value: value,
         language: language === "postcss" ? "css" : language,
-      }); // prettier
+      });
 
       setValue(prettyValue);
       onChange?.(prettyValue);
     }
   }, [value, language]);
 
-  // whenever defaultValue changes, change the value of the editor.
   useEffect(() => {
     setValue(defaultValue);
   }, [defaultValue]);
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
-      <div className="flex flex-shrink-0 h-12 px-3 items-center border-b z-[2] bg-gray-100">
+      <div className="flex flex-shrink-0 h-12 px-3 items-center border-b border-white/20 z-[2] bg-black/50">
         <div className="flex-1">
           <h1 className="text-lg mt-0">{title}</h1>
         </div>
 
         {hasClear && (
-          <button
-            type="button"
-            className="h-12 text-black mr-4"
-            onClick={onPrettier}
-          >
-            <WandSparkles />
+          <button type="button" className=" mr-4" onClick={onPrettier}>
+            <WandSparkles className="size-4" />
           </button>
         )}
 
         {hasClear && (
-          <button
-            type="button"
-            className="h-12 text-black"
-            onClick={() => setValue("")}
-          >
-            <Trash />
+          <button type="button" onClick={() => setValue("")}>
+            <Trash className="size-4" />
           </button>
         )}
 
         {hasCopy && (
           <button
-            className="mr-3 border-gray-400 rounded h-12"
-            onClick={copyValue}
+            className={isCopied ? "text-green-500" : ""}
+            onClick={() => onCopy(value)}
           >
-            Copy
+            {isCopied ? (
+              <CopyCheck className="size-4" />
+            ) : (
+              <Copy className="size-4" />
+            )}
           </button>
         )}
       </div>

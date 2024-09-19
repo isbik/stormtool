@@ -6,8 +6,9 @@ import { Language, useData } from "../hooks/use-data";
 import { getWorker } from "../lib/worker-wrapper";
 import { EditorPanel, EditorPanelProps } from "./editor";
 import { Spinner } from "./spinner";
+import { TriangleAlert } from "lucide-react";
 
-function getEditorLanguage(lang: Language) {
+function getEditorLanguage(lang: Language): Language {
   const mapping = {
     flow: "typescript",
   };
@@ -57,7 +58,9 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
     splitEditorDefaultValue,
     resultSettingsElement,
   }) {
-    const [value, setValue] = useData(editorDefaultValue || editorLanguage);
+    const [value, setValue] = useData(
+      (editorDefaultValue || editorLanguage) as string
+    );
     const [splitValue, setSplitValue] = useData(
       splitEditorDefaultValue || splitLanguage
     );
@@ -103,8 +106,8 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
 
     return (
       <>
-        <div className="flex flex-row flex-1 overflow-hidden h-[calc(100vh-40px)]">
-          <div className="flex flex-1 border-r flex-col overflow-hidden">
+        <div className="flex flex-row flex-1 overflow-hidden relative">
+          <div className="flex flex-1 border-r border-white/20 flex-col overflow-hidden">
             <EditorPanel
               language={getEditorLanguage(editorLanguage)}
               onChange={setValue}
@@ -119,7 +122,7 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
             />
 
             {splitTitle && (
-              <div className="flex flex-1 border-t">
+              <div className="flex flex-1">
                 <EditorPanel
                   title={splitTitle}
                   defaultValue={splitValue}
@@ -136,7 +139,7 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
           </div>
           <div className="flex flex-1  relative">
             {showUpdateSpinner && (
-              <div className="inline-flex absolute bg-white z-10 rounded-[50%] p-3 top-12 right-8">
+              <div className="inline-flex absolute z-10 rounded-[50%] p-3 top-12 right-8">
                 <Spinner />
               </div>
             )}
@@ -151,22 +154,13 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
               {...resultEditorProps}
             />
           </div>
+          {message && (
+            <div className="absolute bottom-0 left-0 right-0 flex items-center gap-2 bg-red-500/80 p-2 whitespace-nowrap overflow-auto no-scrollbar">
+              <TriangleAlert className="size-5 shrink-0" />
+              {message}
+            </div>
+          )}
         </div>
-
-        {/* {message && (
-          <Alert
-            paddingY={15}
-            paddingX={20}
-            left={240}
-            right={0}
-            position="absolute"
-            intent="danger"
-            bottom={0}
-            title={message}
-            backgroundColor="#FAE2E2"
-            zIndex={3}
-          />
-        )} */}
       </>
     );
   };

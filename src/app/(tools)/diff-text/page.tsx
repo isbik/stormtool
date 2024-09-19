@@ -17,30 +17,26 @@ function DiffTextPage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-4">Diff Text</h1>
+    <div className="p-4 w-full">
+      <h1 className="text-3xl font-bold mb-4">Введите текста</h1>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Text 1</h2>
-          <Monaco
-            className="w-full h-96  border-2 border-gray-300 rounded-md"
-            value={text1}
-            onChange={handleText1Change}
-          />
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Text 2</h2>
-          <Monaco
-            className="w-full h-96 border-2 border-gray-300 rounded-md"
-            value={text2}
-            onChange={handleText2Change}
-          />
-        </div>
+        <Monaco
+          className="w-full h-96"
+          value={text1}
+          onChange={handleText1Change}
+          theme="vs-dark"
+        />
+        <Monaco
+          className="w-full h-96"
+          value={text2}
+          onChange={handleText2Change}
+          theme="vs-dark"
+        />
       </div>
       {(text1 || text2) && (
         <>
-          <h2 className="text-2xl font-bold mt-8 mb-4">Result</h2>
-          <div className="w-full h-96 border-2 border-gray-300 rounded-md">
+          <h2 className="text-2xl font-bold mt-8 mb-4">Результат</h2>
+          <div className="w-full h-96 ">
             <DiffEditor
               height="100%"
               original={text1}
@@ -48,6 +44,7 @@ function DiffTextPage() {
               options={{
                 renderSideBySide: true,
               }}
+              theme="vs-dark"
             />
           </div>
         </>

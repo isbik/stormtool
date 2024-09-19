@@ -1,6 +1,36 @@
 "use client";
 
+import { useCopy } from "@/shared/hooks/use-copy";
+import { cn } from "@/shared/lib/cn";
+import { Button } from "@/shared/ui/button";
+import { Card, CardContent, CardDescription } from "@/shared/ui/card";
+import { Input } from "@/shared/ui/input";
+import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
+
+const Row = ({
+  name,
+  value,
+  className,
+  children,
+}: {
+  className?: string;
+  name: React.ReactNode;
+  value: React.ReactNode;
+  children?: React.ReactNode;
+}) => {
+  const { isCopied, onCopy } = useCopy();
+  if (!value) return;
+
+  return (
+    <div className={cn("flex gap-2 items-center", className)}>
+      <div className="font-bold">{name}</div>
+      <div className="flex items-center" onClick={() => onCopy(String(value))}>
+        {children || value}
+      </div>
+    </div>
+  );
+};
 
 const URLComponent = ({ value }: { value: string }) => {
   const [open, setOpen] = useState(false);
@@ -19,48 +49,53 @@ const URLComponent = ({ value }: { value: string }) => {
   const params = result.searchParams.entries();
 
   return (
-    <div>
-      <p>
-        <span className="font-bold">Host</span>: {result.host}
-      </p>
-      {result.hash && (
-        <p>
-          <span className="font-bold">Hash</span>: {result.hash}
-        </p>
-      )}
+    <Card className="flex flex-col gap-1 p-4 my-2">
+      <>
+        <Row name="Protocol" value={result.protocol} />
+        <Row name="Host" value={result.host} />
 
-      {result.pathname !== "/" && (
-        <p>
-          <span className="font-bold">Path</span>: {result.pathname}
-        </p>
-      )}
+        <Row className="text-blue-500" name="Origin" value={result.origin} />
+        <Row name="Hash" value={result.hash} />
 
-      {result.searchParams.size !== 0 && (
-        <>
-          <p className="font-bold">Search Params:</p>
+        {result.pathname !== "/" && (
+          <Row name="Pathname" value={result.pathname} />
+        )}
 
-          <ul className="list pl-4">
-            {Array.from(params).map(([key, value]) => (
-              <li key={key}>
-                <span className="font-bold">{key}</span>: {value}
-                {safeParse(value) && (
-                  <button
-                    type="button"
-                    onClick={() => setOpen((prev) => !prev)}
-                    className="bg-slate-500 border rounded px-2 text-white ml-2"
-                  >
-                    {open ? "Close" : "Open"}
-                  </button>
-                )}
-                <div className="pl-2">
+        <Row name="Port" value={result.port} />
+
+        {result.searchParams.size !== 0 && (
+          <div>
+            <p className="font-bold text-lg">Параметры поиска:</p>
+
+            <ul className="list list-disc pl-4 space-y-1">
+              {Array.from(params).map(([key, value]) => (
+                <li key={key} className="flex flex-col">
+                  <Row name={key} value={value}>
+                    {value}
+                    {safeParse(value) && (
+                      <Button
+                        size={"icon"}
+                        className="ml-2 size-6"
+                        type="button"
+                        onClick={() => setOpen((prev) => !prev)}
+                      >
+                        {open ? (
+                          <Minus className="size-4" />
+                        ) : (
+                          <Plus className="size-4" />
+                        )}
+                      </Button>
+                    )}
+                  </Row>
+
                   {open && <URLComponent value={value} />}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </>
+    </Card>
   );
 };
 
@@ -70,10 +105,10 @@ export default function Home() {
   );
 
   return (
-    <div className="w-full grow p-2 overflow-hidden">
-      <p>Enter url</p>
-      <input
-        className="border w-full p-2"
+    <div className="w-full grow p-4 overflow-hidden">
+      <p className="text-sm font-medium">Введите URL</p>
+      <Input
+        className="mb-4"
         placeholder="Enter url"
         value={value}
         onChange={(event) => setValue(event.target.value)}

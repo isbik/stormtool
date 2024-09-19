@@ -7,7 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={cn("min-h-screen", inter.className)}>{children}</body>
+      <body className={cn("min-h-screen dark", inter.className)}>
+        {children}
+      </body>
     </html>
   );
 }

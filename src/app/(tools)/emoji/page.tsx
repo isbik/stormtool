@@ -46,17 +46,15 @@ const EmojiPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-4">Emoji</h1>
-
-      <Button onClick={handleGenerateRandom}>
+      <Button className="mb-4" onClick={handleGenerateRandom}>
         Сгенерировать случайные эмодзи
       </Button>
 
       {randomEmojis.length > 0 && (
         <div className="mb-4">
-          <h2 className="text-2xl font-bold">Случайные эмодзи:</h2>
+          <h2 className="text-xl font-bold">Случайные эмодзи:</h2>
           <div
-            className="p-2 text-4xl bg-gray-100 flex items-center w-fit rounded"
+            className="p-2 text-xl border border-white/30 flex items-center w-fit rounded"
             onClick={() => handleCopy(randomEmojis.join(""))}
           >
             {randomEmojis.join("")}
@@ -64,13 +62,13 @@ const EmojiPage = () => {
         </div>
       )}
 
-      <h2 className="text-2xl font-bold">All emojis:</h2>
+      <h2 className="text-xl font-bold">Все эмодзи:</h2>
 
-      <div className="grid gap-1 grid-cols-[repeat(auto-fill,minmax(60px,1fr))]">
-        {emojis.slice(0, page * 150).map((emoji) => (
+      <div className="flex flex-wrap gap-1">
+        {emojis.slice(0, page * 250).map((emoji) => (
           <button
             key={emoji}
-            className="w-full p-2 text-4xl bg-gray-100 flex items-center justify-center rounded"
+            className="p-2 text-xl flex items-center justify-center rounded min-w-10"
             onClick={() => handleCopy(emoji)}
           >
             {emoji}
@@ -78,7 +76,7 @@ const EmojiPage = () => {
         ))}
       </div>
 
-      {emojis.length > page * 150 && (
+      {emojis.length > page * 250 && (
         <Button onClick={loadMoreEmojis} className="mt-4">
           Загрузить еще
         </Button>
