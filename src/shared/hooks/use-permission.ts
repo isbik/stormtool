@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useEvent } from "./use-event";
-import { isClient } from "@siberiacancode/reactuse";
+import { isClient } from "../lib/is-client";
 
 /** The permission name */
 export type UsePermissionName =

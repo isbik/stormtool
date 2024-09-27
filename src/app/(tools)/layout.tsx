@@ -22,6 +22,7 @@ export default function ToolLayout({
         </h1>
         <ThemeSwitcher />
       </div>
+
       <div className="flex grow overflow-hidden">
         <Sidebar />
         <div className="flex overflow-auto grow flex-col">{children}</div>

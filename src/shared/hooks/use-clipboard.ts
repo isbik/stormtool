@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { usePermission } from "./use-permission";
-import { isClient } from "@siberiacancode/reactuse";
+import { isClient } from "../lib/is-client";
 
 export const isPermissionAllowed = (status: PermissionState) =>
   status === "granted" || status === "prompt";
@@ -45,7 +45,8 @@ export interface UseCopyToClipboardParams {
 export const useClipboard = (
   params?: UseCopyToClipboardParams
 ): UseCopyToClipboardReturn => {
-  const supported = isClient && window.navigator && "clipboard" in window.navigator;
+  const supported =
+    isClient && window.navigator && "clipboard" in window.navigator;
 
   const [value, setValue] = useState<string | null>(null);
   const clipboardReadPermission = usePermission("clipboard-read");

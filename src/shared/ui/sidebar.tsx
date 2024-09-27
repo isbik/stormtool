@@ -7,7 +7,6 @@ import { useState } from "react";
 import { ALL_TOOLS, CONVERTER_TOOLS, OTHER_TOOLS } from "../data/tools";
 import { Input } from "./input";
 import { ExternalLink, Star } from "lucide-react";
-import { StarFilledIcon } from "@radix-ui/react-icons";
 import { useLocalStorage } from "../hooks/use-local-storage";
 
 type Props = {};
@@ -25,8 +24,6 @@ const NavItem = ({
   isFavorite?: boolean;
   onClickFavorite?: () => void;
 }) => {
-  const Icon = isFavorite ? StarFilledIcon : Star;
-
   const isExternal = url.startsWith("https://") || url.startsWith("http://");
 
   return (
@@ -43,13 +40,16 @@ const NavItem = ({
         {name}
       </span>
 
-      <Icon
+      <Star
         onClick={(event) => {
           event.preventDefault();
           event.stopPropagation();
           onClickFavorite?.();
         }}
-        className="size-4 ml-auto shrink-0 sm:hidden group-hover:block"
+        className={cn(
+          "size-4 ml-auto shrink-0 sm:hidden group-hover:block",
+          isFavorite && "fill-blue-500 stroke-blue-500"
+        )}
       />
     </Link>
   );
@@ -88,7 +88,7 @@ export const Sidebar = (props: Props) => {
   return (
     <div className="max-w-64 w-full grow shrink-0 border-r border-white/20 dark:border-black/20 p-2 overflow-auto shadow-md">
       <Input
-        placeholder="Поиск"
+        placeholder="Поиск инструмента"
         className="mb-4"
         type="search"
         onChange={(event) => setSearch(event.target.value)}

@@ -1,4 +1,4 @@
-import { isClient } from "@siberiacancode/reactuse";
+import { isClient } from "../lib/is-client";
 import {
   useStorage,
   UseStorageInitialValue,
