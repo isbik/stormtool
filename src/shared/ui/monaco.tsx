@@ -1,10 +1,13 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
 import React from "react";
 import { Spinner } from "./spinner";
+import { useTheme } from "next-themes";
 
 interface MonacoProps extends EditorProps {}
 
 export const Monaco: React.FC<MonacoProps> = (props: MonacoProps) => {
+  const { theme } = useTheme();
+
   return (
     <Editor
       loading={
@@ -13,7 +16,7 @@ export const Monaco: React.FC<MonacoProps> = (props: MonacoProps) => {
         </div>
       }
       className="flex-1"
-      theme="vs-dark"
+      theme={theme === "dark" ? "vs" : "vs-dark"}
       {...props}
     />
   );

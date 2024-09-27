@@ -1,9 +1,9 @@
 const prettier = require("prettier/standalone");
 const plugins = [
   require("prettier/plugins/babel"),
+  require("prettier/plugins/postcss"),
   require("prettier/plugins/estree"),
   require("prettier/plugins/html"),
-  require("prettier/plugins/postcss"),
   require("prettier/plugins/markdown"),
   require("prettier/plugins/yaml"),
   require("prettier/plugins/flow"),
@@ -12,7 +12,7 @@ const plugins = [
 ];
 
 export const prettierParsers = {
-  css: "postcss",
+  css: "css",
   javascript: "babel",
   jsx: "babel",
   svg: "html",
@@ -48,7 +48,7 @@ export async function prettify(
     result = prettier.format(value, {
       parser: (prettierParsers as Record<string, string>)[language] || language,
       plugins,
-      semi: false,
+      semi: true,
     });
   }
 

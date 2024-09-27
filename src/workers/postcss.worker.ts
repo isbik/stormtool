@@ -5,7 +5,6 @@ addEventListener(
   "message",
   async ({
     data: { payload, id },
-    ...a
   }: MessageEvent<{ payload: string; id: number }>) => {
     try {
       const root = postcss.parse(payload);
@@ -14,7 +13,7 @@ addEventListener(
         id,
         payload: JSON.stringify(postcssJs.objectify(root)),
       });
-    } catch (e) {
+    } catch (e: any) {
       postMessage({
         id,
         err: e.message,

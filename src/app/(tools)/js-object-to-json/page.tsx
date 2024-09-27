@@ -1,10 +1,10 @@
 "use client";
 
-import { ConversionPanel } from "@/shared/ui/transform-panel";
+import { ConversionPanel, Transformer } from "@/shared/ui/transform-panel";
 import { useCallback } from "react";
 
 export default function JsObjectToJson() {
-  const transformer = useCallback(async ({ value }) => {
+  const transformer = useCallback<Transformer>(async ({ value }) => {
     return JSON.stringify(eval("(" + value + ")"), null, 2);
   }, []);
 

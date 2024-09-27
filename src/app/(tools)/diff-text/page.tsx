@@ -2,18 +2,20 @@
 
 import { Monaco } from "@/shared/ui/monaco";
 import { DiffEditor } from "@monaco-editor/react";
+import { useTheme } from "next-themes";
 import { useState } from "react";
 
 function DiffTextPage() {
   const [text1, setText1] = useState("");
   const [text2, setText2] = useState("");
+  const { theme } = useTheme();
 
-  const handleText1Change = (value: string) => {
-    setText1(value);
+  const handleText1Change = (value: string | undefined) => {
+    setText1(value!);
   };
 
-  const handleText2Change = (value: string) => {
-    setText2(value);
+  const handleText2Change = (value: string | undefined) => {
+    setText2(value!);
   };
 
   return (
@@ -24,13 +26,11 @@ function DiffTextPage() {
           className="w-full h-96"
           value={text1}
           onChange={handleText1Change}
-          theme="vs-dark"
         />
         <Monaco
           className="w-full h-96"
           value={text2}
           onChange={handleText2Change}
-          theme="vs-dark"
         />
       </div>
       {(text1 || text2) && (
@@ -44,7 +44,7 @@ function DiffTextPage() {
               options={{
                 renderSideBySide: true,
               }}
-              theme="vs-dark"
+              theme={theme === "dark" ? "vs" : "vs-dark"}
             />
           </div>
         </>

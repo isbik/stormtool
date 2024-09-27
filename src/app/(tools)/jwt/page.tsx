@@ -58,7 +58,7 @@ export default function Home() {
   const handleBlur = () => {
     try {
       jwtDecode(value);
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
     }
   };

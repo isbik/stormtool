@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import { cn } from "../lib/cn";
 import { useState } from "react";
 import { ALL_TOOLS, CONVERTER_TOOLS, OTHER_TOOLS } from "../data/tools";
-import { useLocalStorage } from "@siberiacancode/reactuse";
 import { Input } from "./input";
-import { Star } from "lucide-react";
+import { ExternalLink, Star } from "lucide-react";
 import { StarFilledIcon } from "@radix-ui/react-icons";
+import { useLocalStorage } from "../hooks/use-local-storage";
 
 type Props = {};
 
@@ -27,6 +27,8 @@ const NavItem = ({
 }) => {
   const Icon = isFavorite ? StarFilledIcon : Star;
 
+  const isExternal = url.startsWith("https://") || url.startsWith("http://");
+
   return (
     <Link
       href={url}
@@ -34,7 +36,9 @@ const NavItem = ({
         "flex items-center p-1 px-2.5 text-sm rounded group",
         isActive && "bg-slate-700/50"
       )}
+      target={isExternal ? "_blank" : "_self"}
     >
+      {isExternal && <ExternalLink className="size-3 mr-2" />}
       <span className="overflow-hidden whitespace-nowrap text-ellipsis">
         {name}
       </span>
@@ -82,7 +86,7 @@ export const Sidebar = (props: Props) => {
   };
 
   return (
-    <div className="max-w-64 w-full grow shrink-0 bg-black/20 border-r border-white/30 p-2 overflow-auto">
+    <div className="max-w-64 w-full grow shrink-0 border-r border-white/20 dark:border-black/20 p-2 overflow-auto shadow-md">
       <Input
         placeholder="Поиск"
         className="mb-4"
@@ -94,7 +98,7 @@ export const Sidebar = (props: Props) => {
       {pinned.length > 0 && (
         <div className="space-y-2 mb-4">
           <div className="flex gap-2">
-            <p className="px-2 text-xs font-bold tracking-wide text-slate-400">
+            <p className="px-2 text-xs font-bold tracking-wide opacity-70">
               Избранное
             </p>
 
@@ -122,7 +126,7 @@ export const Sidebar = (props: Props) => {
       )}
 
       <div className="space-y-2 mb-4">
-        <p className="px-2 text-xs font-bold tracking-wide text-slate-400">
+        <p className="px-2 text-xs font-bold tracking-wide opacity-70">
           Конвертация кода
         </p>
         {displayConverterTools.map((tool) => {
@@ -139,7 +143,7 @@ export const Sidebar = (props: Props) => {
       </div>
 
       <div className="space-y-2">
-        <p className="px-2 text-xs font-bold tracking-wide text-slate-400">
+        <p className="px-2 text-xs font-bold tracking-wide opacity-70">
           Другие инструменты
         </p>
         {displayOtherTools.map((tool) => {

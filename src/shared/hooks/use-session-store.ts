@@ -1,9 +1,10 @@
 import { useState } from "react";
 import pkg from "../../../package.json";
+import { isClient } from "../lib/is-client";
 
 const prefix = `transform:${pkg.version}:`;
 
-export function useSessionStorage<T = string>(
+export function useSessionStorage<T extends string>(
   key: string,
   initialValue: T
 ): [T, (value: T | ((prevState: T) => T)) => void] {
@@ -13,10 +14,9 @@ export function useSessionStorage<T = string>(
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       // Get from local storage by key
-      const item =
-        typeof window !== "undefined"
-          ? window.sessionStorage.getItem(prefix + key) || initialValue
-          : initialValue;
+      const item = isClient
+        ? window.sessionStorage.getItem(prefix + key) || initialValue
+        : initialValue;
       // Parse stored json or if none return initialValue
       return key.startsWith("data:") ? item : JSON.parse(item);
     } catch (error) {

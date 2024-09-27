@@ -1,5 +1,5 @@
-import { useClipboard } from "@siberiacancode/reactuse";
 import { useState } from "react";
+import { useClipboard } from "./use-clipboard";
 
 export const useCopy = () => {
   const { copy } = useClipboard();

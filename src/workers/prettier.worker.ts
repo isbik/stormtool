@@ -19,7 +19,7 @@ addEventListener(
         id,
         payload,
       });
-    } catch (e) {
+    } catch (e: any) {
       postMessage({
         id,
         err: e.message,

@@ -6,12 +6,12 @@ import { Language, useData } from "../hooks/use-data";
 import { getWorker } from "../lib/worker-wrapper";
 import { EditorPanel, EditorPanelProps } from "./editor";
 import { Spinner } from "./spinner";
-import { TriangleAlert } from "lucide-react";
+import { TriangleAlert, X } from "lucide-react";
 
 function getEditorLanguage(lang: Language): Language {
   const mapping = {
     flow: "typescript",
-  };
+  } as Record<Language, Language>;
 
   return mapping[lang] || lang;
 }
@@ -22,7 +22,6 @@ export type Transformer = (args: {
 }) => Promise<string>;
 
 export interface ConversionPanelProps {
-  splitTitle?: string;
   splitLanguage?: Language;
   editorTitle: string;
   editorLanguage: Language;
@@ -42,12 +41,9 @@ export interface ConversionPanelProps {
 
 export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
   function ({
-    splitEditorProps,
     editorProps,
     resultEditorProps,
     transformer,
-    splitLanguage,
-    splitTitle,
     editorLanguage,
     editorTitle,
     resultLanguage,
@@ -55,15 +51,10 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
     editorSettingsElement,
     settings,
     editorDefaultValue,
-    splitEditorDefaultValue,
     resultSettingsElement,
   }) {
-    const [value, setValue] = useData(
-      (editorDefaultValue || editorLanguage) as string
-    );
-    const [splitValue, setSplitValue] = useData(
-      splitEditorDefaultValue || splitLanguage
-    );
+    const [value, setValue] = useData(editorDefaultValue || editorLanguage);
+
     const [result, setResult] = useState("");
     const [message, setMessage] = useState("");
     const [showUpdateSpinner, toggleUpdateSpinner] = useState(false);
@@ -80,7 +71,6 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
 
           const result = await transformer({
             value,
-            splitEditorValue: splitTitle ? splitValue : undefined,
           });
 
           let prettyResult = await prettierWorker.send({
@@ -94,15 +84,14 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
           }
           setResult(prettyResult);
           setMessage("");
-        } catch (e) {
-          console.error(e);
+        } catch (e: any) {
           setMessage(e.message);
         }
         toggleUpdateSpinner(false);
       }
 
       transform();
-    }, [splitValue, value, splitTitle, settings]);
+    }, [value, settings]);
 
     return (
       <>
@@ -120,22 +109,6 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
               hasClear
               {...editorProps}
             />
-
-            {splitTitle && (
-              <div className="flex flex-1">
-                <EditorPanel
-                  title={splitTitle}
-                  defaultValue={splitValue}
-                  language={getEditorLanguage(splitLanguage)}
-                  id={2}
-                  hasCopy={false}
-                  onChange={setSplitValue}
-                  hasLoad
-                  hasClear
-                  {...splitEditorProps}
-                />
-              </div>
-            )}
           </div>
           <div className="flex flex-1  relative">
             {showUpdateSpinner && (
@@ -158,6 +131,14 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
             <div className="absolute bottom-0 left-0 right-0 flex items-center gap-2 bg-red-500/80 p-2 whitespace-nowrap overflow-auto no-scrollbar">
               <TriangleAlert className="size-5 shrink-0" />
               {message}
+
+              <button
+                className="ml-auto"
+                onClick={() => setMessage("")}
+                type="button"
+              >
+                <X />
+              </button>
             </div>
           )}
         </div>

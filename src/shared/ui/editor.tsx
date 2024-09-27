@@ -14,7 +14,7 @@ export interface EditorPanelProps {
   hasCopy?: boolean;
   hasPrettier?: boolean;
   id: string | number;
-  onChange?: (value?: string) => void;
+  onChange?: (value: string) => void;
   hasLoad?: boolean;
   hasClear?: boolean;
   settingElement?: (args: { toggle: () => void; open: boolean }) => JSX.Element;
@@ -40,7 +40,6 @@ export function EditorPanel({
   language,
   defaultValue,
   onChange,
-  id,
 }: EditorPanelProps) {
   const [showSettingsDialogue, setSettingsDialog] = useState(false);
   const [value, setValue] = useState(defaultValue);
@@ -72,8 +71,8 @@ export function EditorPanel({
       );
 
       const prettyValue = await prettierWorker.send({
-        value: value,
-        language: language === "postcss" ? "css" : language,
+        value: value.trim(),
+        language: language,
       });
 
       setValue(prettyValue);
@@ -87,7 +86,7 @@ export function EditorPanel({
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
-      <div className="flex flex-shrink-0 h-12 px-3 items-center border-b border-white/20 z-[2] bg-black/50">
+      <div className="flex flex-shrink-0 h-12 px-3 items-center border-b border-white/20 z-[2] shadow-md">
         <div className="flex-1">
           <h1 className="text-lg mt-0">{title}</h1>
         </div>
@@ -138,7 +137,7 @@ export function EditorPanel({
           options={options}
           onChange={(value) => {
             setValue(value);
-            onChange?.(value);
+            onChange?.(value ?? "");
           }}
         />
       </div>

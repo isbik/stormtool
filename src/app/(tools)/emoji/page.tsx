@@ -3,18 +3,23 @@
 import { Button } from "@/shared/ui/button";
 import { useState, useEffect } from "react";
 
+type EmojiData = Array<{
+  category: string;
+  emojis: string[][];
+}>;
+
 const EmojiPage = () => {
   useEffect(() => {
     fetch("/emojis-en-v5.0.json")
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: EmojiData) => {
         return setEmojis(
           data.reduce(
             (acc, category) => [
               ...acc,
               ...category.emojis.map((emoji) => emoji[0]),
             ],
-            []
+            [] as string[]
           )
         );
       });
@@ -26,7 +31,7 @@ const EmojiPage = () => {
   const [page, setPage] = useState(1);
 
   const handleCopy = (emoji: string) => {
-    navigator.clipboard.writeText(emoji);
+    window.navigator.clipboard.writeText(emoji);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };

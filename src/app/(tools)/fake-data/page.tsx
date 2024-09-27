@@ -1,13 +1,12 @@
 "use client";
 import { Button } from "@/shared/ui/button";
 import { useEffect, useState } from "react";
-import type { LocaleDefinition } from "@faker-js/faker";
 import { base, ru, en, Faker } from "@faker-js/faker";
 import { useCopy } from "@/shared/hooks/use-copy";
 import { cn } from "@/shared/lib/cn";
 import { CopyCheck, Copy } from "lucide-react";
 
-export const faker = new Faker({
+const faker = new Faker({
   locale: [ru, en, base],
 });
 
@@ -24,7 +23,7 @@ const Row = ({ name, value, className, ...props }: RowProps) => {
       className={cn("flex flex-row gap-2 items-center", className)}
       {...props}
     >
-      <p className="text-slate-200 font-bold">{name}</p>
+      <p className="font-bold">{name}</p>
       <div className="flex items-center gap-2">
         <p className="flex-1">{value}</p>
         <Button
@@ -43,7 +42,7 @@ const Row = ({ name, value, className, ...props }: RowProps) => {
   );
 };
 
-export default function FakeData() {
+function FakeDataPage() {
   const [data, setData] = useState<{
     name: string;
     card: string;
@@ -101,3 +100,5 @@ export default function FakeData() {
     </div>
   );
 }
+
+export default FakeDataPage;

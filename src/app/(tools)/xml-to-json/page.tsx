@@ -1,10 +1,10 @@
 "use client";
-import { ConversionPanel } from "@/shared/ui/transform-panel";
+import { ConversionPanel, Transformer } from "@/shared/ui/transform-panel";
 import { useCallback } from "react";
 import { xml2json } from "xml-js";
 
 export default function XmlToJson() {
-  const transformer = useCallback(async ({ value }) => {
+  const transformer = useCallback<Transformer>(async ({ value }) => {
     return JSON.stringify(
       JSON.parse(
         xml2json(value, {
