@@ -9,8 +9,6 @@ import { Input } from "./input";
 import { ExternalLink, Star } from "lucide-react";
 import { useLocalStorage } from "../hooks/use-local-storage";
 
-type Props = {};
-
 const NavItem = ({
   name,
   url,
@@ -55,7 +53,11 @@ const NavItem = ({
   );
 };
 
-export const Sidebar = (props: Props) => {
+type Props = {
+  isOpen: boolean;
+};
+
+export const Sidebar = ({ isOpen }: Props) => {
   const pathname = usePathname();
   const { value: pinned = [], set: setPinned } = useLocalStorage<string[]>(
     "pinned-tools",
@@ -86,7 +88,13 @@ export const Sidebar = (props: Props) => {
   };
 
   return (
-    <div className="max-w-64 w-full grow shrink-0 border-r border-white/20 dark:border-black/20 p-2 overflow-auto shadow-md">
+    <div
+      className={cn(
+        "max-w-64 w-full grow shrink-0 border-r border-white/20 dark:border-black/20 p-2 overflow-auto shadow-md transition-all",
+        isOpen ? "block max-md:translate-x-0" : "max-md:-translate-x-full",
+        "max-md:absolute max-md:z-10 max-md:h-full dark:bg-white bg-neutral-950"
+      )}
+    >
       <Input
         placeholder="Поиск инструмента"
         className="mb-4"

@@ -1,32 +1,67 @@
+"use client";
+import { ALL_TOOLS } from "@/shared/data/tools";
+import { cn } from "@/shared/lib/cn";
+import { Button } from "@/shared/ui/button";
 import { Sidebar } from "@/shared/ui/sidebar";
 import { ThemeSwitcher } from "@/widgets/theme-switcher";
+import { Menu, X } from "lucide-react";
+import Head from "next/head";
 
-import type { Metadata } from "next";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-  title: "Storm Tool",
-  description: "Storm Tool",
-};
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function ToolLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <main className="flex grow h-full flex-col max-h-screen overflow-hidden">
-      <div className="min-h-8 border-b dark:border-black/20 p-2 px-4 shrink-0 flex items-center gap-2 border-white/20">
-        <h1 className="font-bold text-lg">
-          <Link href="/">Storm Tool</Link>
-        </h1>
-        <ThemeSwitcher />
-      </div>
+  const router = usePathname();
+  const [open, setOpen] = useState(false);
 
-      <div className="flex grow overflow-hidden">
-        <Sidebar />
-        <div className="flex overflow-auto grow flex-col">{children}</div>
-      </div>
-    </main>
+  useEffect(() => setOpen(false), [router]);
+
+  const tool = ALL_TOOLS.find((tool) => {
+    return tool.url === router;
+  });
+
+  return (
+    <>
+      {tool && (
+        <Head>
+          <title>{tool?.name}</title>
+          <meta name="description" content={tool?.description} />
+        </Head>
+      )}
+      <main className="flex grow h-full flex-col max-h-screen overflow-hidden">
+        <div className="min-h-8 border-b dark:border-black/20 p-2 px-4 shrink-0 flex items-center gap-2 border-white/20">
+          <Button
+            className="md:hidden shrink-0"
+            onClick={() => setOpen(!open)}
+            variant={"ghost"}
+            size={"icon"}
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </Button>
+          <h1 className="font-bold sm:text-lg overflow-hidden whitespace-nowrap text-ellipsis">
+            <Link href="/">Storm Tool</Link>
+            {tool && ` ❘ ${tool.name}`}
+          </h1>
+          <ThemeSwitcher />
+        </div>
+
+        <div className="flex grow overflow-hidden relative">
+          <Sidebar isOpen={open} />
+          <div
+            className={cn(
+              "flex overflow-auto grow flex-col",
+              open && "max-md:opacity-50 max-md:pointer-events-none"
+            )}
+          >
+            {children}
+          </div>
+        </div>
+      </main>
+    </>
   );
 }

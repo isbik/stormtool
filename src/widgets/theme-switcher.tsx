@@ -31,7 +31,7 @@ export function ThemeSwitcher() {
             variant={"ghost"}
             size={"icon"}
           >
-            <SunMoon />
+            <SunMoon className="size-5" />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Переключить тему</TooltipContent>

@@ -101,7 +101,7 @@ const URLComponent = ({ value }: { value: string }) => {
 
 export default function Home() {
   const [value, setValue] = useState(
-    "https://rss.app/new-rss-feed/rss-builder?jsTimeout=auto&url=https%3A%2F%2Frss.app%3Futm%3D12%26url%3Dhttps%3A%2F%2Fcom.a&contentType=NEWS"
+    "https://test.app/new/create?myParam=auto&url=https%3A%2F%2Ftest.com%3Futm%3D12%26url%3Dhttps%3A%2F%2Fcom.a&type=news"
   );
 
   return (
