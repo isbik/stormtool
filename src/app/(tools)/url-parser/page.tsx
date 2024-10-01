@@ -19,13 +19,16 @@ const Row = ({
   value: React.ReactNode;
   children?: React.ReactNode;
 }) => {
-  const { isCopied, onCopy } = useCopy();
+  const { onCopy } = useCopy();
   if (!value) return;
 
   return (
-    <div className={cn("flex gap-2 items-center", className)}>
-      <div className="font-bold">{name}</div>
-      <div className="flex items-center" onClick={() => onCopy(String(value))}>
+    <div className={cn("flex gap-2 items-start", className)}>
+      <div>{name}</div>
+      <div
+        className="flex items-center bg-neutral-500/10 select-all px-1 py-0.5 rounded break-all font-mono"
+        onClick={() => onCopy(String(value))}
+      >
         {children || value}
       </div>
     </div>
@@ -65,15 +68,16 @@ const URLComponent = ({ value }: { value: string }) => {
 
         {result.searchParams.size !== 0 && (
           <div>
-            <p className="font-bold text-lg">Параметры поиска:</p>
+            <p className="text-lg mb-2 font-bold">Параметры поиска</p>
 
-            <ul className="list list-disc pl-4 space-y-1">
+            <ul className="list list-disc space-y-1">
               {Array.from(params).map(([key, value]) => (
                 <li key={key} className="flex flex-col">
                   <Row name={key} value={value}>
                     {value}
                     {safeParse(value) && (
                       <Button
+                        variant={"secondary"}
                         size={"icon"}
                         className="ml-2 size-6"
                         type="button"
@@ -101,11 +105,11 @@ const URLComponent = ({ value }: { value: string }) => {
 
 export default function Home() {
   const [value, setValue] = useState(
-    "https://test.app/new/create?myParam=auto&url=https%3A%2F%2Ftest.com%3Futm%3D12%26url%3Dhttps%3A%2F%2Fcom.a&type=news"
+    "https://news/url-parser?param1=value1&param2=value2"
   );
 
   return (
-    <div className="w-full grow p-4 overflow-hidden">
+    <div className="w-full grow p-4">
       <p className="text-sm font-medium">Введите URL</p>
       <Input
         className="mb-4"

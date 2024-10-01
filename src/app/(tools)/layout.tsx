@@ -4,7 +4,7 @@ import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { Sidebar } from "@/shared/ui/sidebar";
 import { ThemeSwitcher } from "@/widgets/theme-switcher";
-import { Menu, X } from "lucide-react";
+import { Github, Menu, X } from "lucide-react";
 import Head from "next/head";
 
 import Link from "next/link";
@@ -17,6 +17,7 @@ export default function ToolLayout({
   children: React.ReactNode;
 }>) {
   const router = usePathname();
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => setOpen(false), [router]);
@@ -48,6 +49,7 @@ export default function ToolLayout({
             {tool && ` ❘ ${tool.name}`}
           </h1>
           <ThemeSwitcher />
+          <a href="https://github.com/isbik/stormtool">Github</a>
         </div>
 
         <div className="flex grow overflow-hidden relative">

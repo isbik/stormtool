@@ -28,7 +28,7 @@ export function ThemeSwitcher() {
           <Button
             onClick={theme === "light" ? setDarkTheme : setLightTheme}
             className="ml-auto"
-            variant={"ghost"}
+            variant={"outline"}
             size={"icon"}
           >
             <SunMoon className="size-5" />
