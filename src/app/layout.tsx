@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <meta name="theme-color" content="#fff" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </Head>
-      <body className={cn("min-h-screen", inter.className)}>
+      <body className={cn("min-h-dvh", inter.className)}>
         <ThemeProvider attribute="class">{children}</ThemeProvider>
       </body>
     </html>

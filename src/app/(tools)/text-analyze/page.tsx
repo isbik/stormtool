@@ -113,7 +113,7 @@ export default function Home() {
 
   return (
     <div className="w-full grow p-2 overflow-hidden">
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 max-md:flex-col">
         <Textarea
           className="w-full p-2 rounded"
           placeholder="Введите текс"

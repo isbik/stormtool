@@ -95,7 +95,7 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
 
     return (
       <>
-        <div className="flex flex-row flex-1 overflow-hidden relative">
+        <div className="flex max-md:flex-col flex-1 overflow-hidden relative">
           <div className="flex flex-1 border-r border-white/20 flex-col overflow-hidden">
             <EditorPanel
               language={getEditorLanguage(editorLanguage)}
