@@ -23,20 +23,20 @@ function DiffTextPage() {
       <h1 className="text-3xl font-bold mb-4">Введите текста</h1>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Monaco
-          className="w-full h-96"
+          className="w-full h-96 border"
           value={text1}
           onChange={handleText1Change}
         />
         <Monaco
-          className="w-full h-96"
+          className="w-full h-96 border"
           value={text2}
           onChange={handleText2Change}
         />
       </div>
       {(text1 || text2) && (
         <>
-          <h2 className="text-2xl font-bold mt-8 mb-4">Результат</h2>
-          <div className="w-full h-96 ">
+          <h2 className="text-2xl font-bold my-4">Результат</h2>
+          <div className="w-full h-96 border">
             <DiffEditor
               height="100%"
               original={text1}
@@ -44,7 +44,7 @@ function DiffTextPage() {
               options={{
                 renderSideBySide: true,
               }}
-              theme={theme === "dark" ? "vs" : "vs-dark"}
+              theme={theme === "dark" ? "vs-dark" : "vs"}
             />
           </div>
         </>

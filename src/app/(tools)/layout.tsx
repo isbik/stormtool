@@ -35,7 +35,7 @@ export default function ToolLayout({
         </Head>
       )}
       <main className="flex grow h-full flex-col max-h-screen overflow-hidden">
-        <div className="min-h-8 border-b dark:border-black/20 p-2 px-4 shrink-0 flex items-center gap-2 border-white/20">
+        <div className="min-h-8 border-b border-black/20 p-2 px-4 shrink-0 flex items-center gap-2 dark:border-white/20">
           <Button
             className="md:hidden shrink-0"
             onClick={() => setOpen(!open)}

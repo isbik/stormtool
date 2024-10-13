@@ -1,5 +1,6 @@
 "use client";
 
+import { useStorage } from "@/shared/hooks/use-storage";
 import {
   toSentenceCase,
   toTitleCase,
@@ -7,60 +8,108 @@ import {
   toPascalCase,
   toSnakeCase,
   toKebabCase,
+  toUnderscoreCase,
 } from "@/shared/lib/text";
-import { Button } from "@/shared/ui/button";
 import { Card, CardContent, CardHeader } from "@/shared/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/ui/select";
 import { Textarea } from "@/shared/ui/textarea";
-import { useState } from "react";
 
-export default function Home() {
-  const [value, setValue] = useState("Съешь ещё этих мягких французских булок");
-  const [result, setResult] = useState("");
+const TEXT_FORMATS = [
+  {
+    name: "Заглавные предложения",
+    value: "toSentenceCase",
+    converter: (value: string) => toSentenceCase(value),
+  },
+  {
+    name: "Title Case",
+    value: "toTitleCase",
+    converter: (value: string) => toTitleCase(value),
+  },
+  {
+    name: "camelCase",
+    value: "toCamelCase",
+    converter: (value: string) => toCamelCase(value),
+  },
+  {
+    name: "PascalCase",
+    value: "toPascalCase",
+    converter: (value: string) => toPascalCase(value),
+  },
+  {
+    name: "snake_case",
+    value: "toSnakeCase",
+    converter: (value: string) => toSnakeCase(value),
+  },
+  {
+    name: "kebab-case",
+    value: "toKebabCase",
+    converter: (value: string) => toKebabCase(value),
+  },
+  {
+    name: "toSnakeCase -> to_snake_case",
+    value: "toUnderscoreCase",
+    converter: (value: string) => toUnderscoreCase(value),
+  },
+];
 
-  const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleSortLines = () => {
-    setResult(value.split("\n").sort().join("\n"));
-  };
-
-  const handleSortReverseLines = () => {
-    setResult(value.split("\n").sort().reverse().join("\n"));
-  };
-
-  const handleSortRandom = () => {
-    setResult(
+const SORT_BY_OPTIONS = [
+  {
+    name: "none",
+    value: "none",
+    converter: (value: string) => value,
+  },
+  {
+    name: "asc",
+    value: "asc",
+    converter: (value: string) => value.split("\n").sort().join("\n"),
+  },
+  {
+    name: "desc",
+    value: "desc",
+    converter: (value: string) => value.split("\n").sort().reverse().join("\n"),
+  },
+  {
+    name: "random",
+    value: "random",
+    converter: (value: string) =>
       value
         .split("\n")
         .sort(() => Math.random() - 0.5)
-        .join("\n")
-    );
+        .join("\n"),
+  },
+];
+
+export default function Home() {
+  const textStore = useStorage(
+    "text-analyze:text",
+    "Съешь ещё этих мягких французских булок"
+  );
+
+  const textValue = textStore.value ?? "";
+
+  const formatState = useStorage("text-analyze:format", TEXT_FORMATS[0].value);
+
+  const sortByStore = useStorage("text-analyze:sortBy", "none");
+
+  const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    textStore.set(event.target.value);
   };
 
-  const handleToSentenceCase = () => {
-    setResult(toSentenceCase(value));
-  };
+  const formatter = TEXT_FORMATS.find(
+    (f) => f.value === formatState.value
+  )?.converter;
+  const sorter = SORT_BY_OPTIONS.find(
+    (f) => f.value === sortByStore.value
+  )?.converter;
 
-  const handleToTitleCase = () => {
-    setResult(toTitleCase(value));
-  };
-
-  const handleToCamelCase = () => {
-    setResult(toCamelCase(value));
-  };
-
-  const handleToPascalCase = () => {
-    setResult(toPascalCase(value));
-  };
-
-  const handleToSnakeCase = () => {
-    setResult(toSnakeCase(value));
-  };
-
-  const handleToKebabCase = () => {
-    setResult(toKebabCase(value));
-  };
+  const textResult = sorter?.(formatter?.(textValue) ?? "");
 
   return (
     <div className="w-full grow p-2 overflow-hidden">
@@ -68,7 +117,7 @@ export default function Home() {
         <Textarea
           className="w-full p-2 rounded"
           placeholder="Введите текс"
-          value={value}
+          value={textStore.value}
           onChange={handleInput}
           rows={10}
         />
@@ -80,15 +129,17 @@ export default function Home() {
               <tbody>
                 <tr>
                   <td>Количество строк</td>
-                  <td className="text-right">{value.split("\n").length}</td>
+                  <td className="text-right">{textValue.split("\n").length}</td>
                 </tr>
                 <tr>
                   <td>Количество слов</td>
-                  <td className="text-right">{value.split(/\s+/).length}</td>
+                  <td className="text-right">
+                    {textValue.split(/\s+/).length}
+                  </td>
                 </tr>
                 <tr>
                   <td>Количество символов</td>
-                  <td className="text-right">{value.length}</td>
+                  <td className="text-right">{textValue.length}</td>
                 </tr>
               </tbody>
             </table>
@@ -96,29 +147,62 @@ export default function Home() {
         </Card>
       </div>
 
-      <p>Конвертирование текста</p>
+      <div className="flex gap-2 flex-wrap mb-4">
+        <div className="flex gap-1 flex-col">
+          <p>Конвертирование текста</p>
 
-      <div className="flex gap-2 mb-2">
-        <Button onClick={handleToSentenceCase}>Заглавные предложения</Button>
-        <Button onClick={handleToTitleCase}>Title Case</Button>
-        <Button onClick={handleToCamelCase}>camelCase</Button>
-        <Button onClick={handleToPascalCase}>PascalCase</Button>
-        <Button onClick={handleToSnakeCase}>snake_case</Button>
-        <Button onClick={handleToKebabCase}>kebab-case</Button>
-      </div>
+          <Select
+            value={formatState.value}
+            onValueChange={(value) => {
+              formatState.set(value);
+            }}
+          >
+            <SelectTrigger className="w-fit">
+              <SelectValue />
+            </SelectTrigger>
 
-      <p>Сортировка строк</p>
+            <SelectContent>
+              <SelectGroup>
+                {TEXT_FORMATS.map((format) => (
+                  <SelectItem key={format.value} value={format.value}>
+                    {format.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div className="flex gap-2 mb-4">
-        <Button onClick={handleSortLines}>По алфавиту</Button>
-        <Button onClick={handleSortReverseLines}>По убыванию</Button>
-        <Button onClick={handleSortRandom}>Случайно</Button>
+        <div className="flex flex-col gap-1">
+          <p>Сортировка строк</p>
+
+          <Select
+            value={sortByStore.value}
+            onValueChange={(value) => {
+              sortByStore.set(value);
+            }}
+          >
+            <SelectTrigger className="w-fit">
+              <SelectValue />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectGroup>
+                {SORT_BY_OPTIONS.map((format) => (
+                  <SelectItem key={format.value} value={format.value}>
+                    {format.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <Textarea
         className="w-full p-2 rounded"
         placeholder="Результат"
-        value={result}
+        value={textResult}
         rows={10}
       />
     </div>

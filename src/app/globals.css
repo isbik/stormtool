@@ -6,7 +6,7 @@
 }
 
 body {
-  @apply bg-neutral-950 text-white dark:bg-white dark:text-neutral-800 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.1),rgba(255,255,255,0.1))] flex flex-col;
+  @apply dark:bg-neutral-950 dark:text-white bg-white text-neutral-800 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.1),rgba(255,255,255,0.1))] flex flex-col;
 }
 
 .no-scrollbar::-webkit-scrollbar {

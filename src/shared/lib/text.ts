@@ -48,6 +48,14 @@ export const toKebabCase = (text: string): string => {
   return kebabCaseWords.join("-");
 };
 
+export const toUnderscoreCase = (text: string): string => {
+  return text
+    .trim()
+    .replace(/([A-ZА-ЯЁ])/g, "_$1")
+    .toLowerCase()
+    .replace(/\s+/g, "_");
+};
+
 export const toSlug = (text: string): string => {
   const translitMap = {
     а: "a",

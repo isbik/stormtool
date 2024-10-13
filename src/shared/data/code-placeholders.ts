@@ -41,6 +41,17 @@ li {
 }
 `;
 
+export const scss = `body {
+  font-family: 'Lato', sans-serif;
+}
+.block {
+  font-weight: 700;
+  & a {
+    color: red;
+  }
+}
+}`;
+
 export const css2 = `.alert {
   position: relative;
   padding: 1.6rem 4.6rem;

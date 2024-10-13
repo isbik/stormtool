@@ -16,7 +16,7 @@ export const Monaco: React.FC<MonacoProps> = (props: MonacoProps) => {
         </div>
       }
       className="flex-1"
-      theme={theme === "dark" ? "vs" : "vs-dark"}
+      theme={theme === "dark" ? "vs-dark" : "vs"}
       {...props}
     />
   );

@@ -90,9 +90,9 @@ export const Sidebar = ({ isOpen }: Props) => {
   return (
     <div
       className={cn(
-        "max-w-64 w-full grow shrink-0 border-r border-white/20 dark:border-black/20 p-2 overflow-auto shadow-md transition-all",
+        "max-w-64 w-full grow shrink-0 border-r border-black/10 dark:border-white/10 p-2 overflow-auto shadow-md transition-all",
         isOpen ? "block max-md:translate-x-0" : "max-md:-translate-x-full",
-        "max-md:absolute max-md:z-10 max-md:h-full dark:bg-white bg-neutral-950"
+        "max-md:absolute max-md:z-10 max-md:h-full bg-white dark:bg-neutral-950"
       )}
     >
       <Input
@@ -104,8 +104,8 @@ export const Sidebar = ({ isOpen }: Props) => {
       />
 
       {pinned.length > 0 && (
-        <div className="space-y-2 mb-4">
-          <div className="flex gap-2">
+        <div className="space-1-2 mb-4">
+          <div className="mb-2 flex gap-2">
             <p className="px-2 text-xs font-bold tracking-wide opacity-70">
               Избранное
             </p>
@@ -133,7 +133,7 @@ export const Sidebar = ({ isOpen }: Props) => {
         </div>
       )}
 
-      <div className="space-y-2 mb-4">
+      <div className="space-y-1 mb-4">
         <p className="px-2 text-xs font-bold tracking-wide opacity-70">
           Конвертация кода
         </p>

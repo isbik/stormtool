@@ -62,6 +62,12 @@ export const CONVERTER_TOOLS = [
     url: "/js-object-to-json",
     icon: Code,
   },
+  {
+    name: "SCSS TO CSS",
+    description: "Конвертирует SCSS код в CSS код",
+    url: "/scss-to-css",
+    icon: Code,
+  },
 ];
 
 export const OTHER_TOOLS = [
