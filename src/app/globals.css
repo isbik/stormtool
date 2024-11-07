@@ -3,10 +3,35 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --sidebar-background: 240 10% 100%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    --bg-accent: 240 5.9% 10%;
+    --bg-background: 100 0% 30%;
+  }
+
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 240 5.9% 10%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 280 4.7% 95.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    --bg-accent: 240 5.9% 10%;
+    --bg-background: 0 0% 99%;
+  }
 }
 
 body {
-  @apply dark:bg-neutral-950 dark:text-white bg-white text-neutral-800 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.1),rgba(255,255,255,0.1))] flex flex-col;
+  @apply flex flex-col;
 }
 
 .no-scrollbar::-webkit-scrollbar {

@@ -32,7 +32,7 @@ export default function PlaceholdersPage() {
         <a
           key={example.title}
           href={example.url}
-          className="rounded-lg border border-white/50 p-4 shadow hover:bg-white/10"
+          className="rounded-lg border p-4 shadow hover:bg-white/10 dark:hover:bg-black/10"
           download
           target="_blank"
         >

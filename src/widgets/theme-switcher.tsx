@@ -1,13 +1,14 @@
 "use client";
 
 import { Button } from "@/shared/ui/button";
+import { Switch } from "@/shared/ui/switch";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/shared/ui/tooltip";
-import { SunMoon } from "lucide-react";
+import { Moon, Sun, SunMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 import React from "react";
 
@@ -22,20 +23,16 @@ export function ThemeSwitcher() {
   }
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            onClick={theme === "light" ? setDarkTheme : setLightTheme}
-            className="ml-auto"
-            variant={"outline"}
-            size={"icon"}
-          >
-            <SunMoon className="size-5" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Переключить тему</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Switch
+      onClick={theme === "light" ? setDarkTheme : setLightTheme}
+      className="ml-auto"
+      checked={theme === "dark"}
+    >
+      {theme === "light" ? (
+        <Sun className="size-3 text-white" />
+      ) : (
+        <Moon className="text-black size-3" />
+      )}
+    </Switch>
   );
 }

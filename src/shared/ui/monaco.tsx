@@ -15,7 +15,7 @@ export const Monaco: React.FC<MonacoProps> = (props: MonacoProps) => {
           <Spinner />
         </div>
       }
-      className="flex-1"
+      className="flex-1 h-full w-full min-h-full min-w-full"
       theme={theme === "dark" ? "vs-dark" : "vs"}
       {...props}
     />

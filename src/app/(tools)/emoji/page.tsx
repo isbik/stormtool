@@ -59,7 +59,7 @@ const EmojiPage = () => {
         <div className="mb-4">
           <h2 className="text-xl font-bold">Случайные эмодзи:</h2>
           <div
-            className="p-2 text-xl border border-white/30 flex items-center w-fit rounded"
+            className="p-2 text-xl border flex items-center w-fit rounded"
             onClick={() => handleCopy(randomEmojis.join(""))}
           >
             {randomEmojis.join("")}

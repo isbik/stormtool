@@ -4,7 +4,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Language, useData } from "../hooks/use-data";
 import { getWorker } from "../lib/worker-wrapper";
-import { EditorPanel, EditorPanelProps } from "./editor";
+import { EditorPanel, EditorPanelProps } from "../../widgets/editor";
 import { Spinner } from "./spinner";
 import { TriangleAlert, X } from "lucide-react";
 
@@ -95,22 +95,21 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
 
     return (
       <>
-        <div className="flex max-md:flex-col flex-1 overflow-hidden relative">
-          <div className="flex flex-1 border-r border-white/20 flex-col overflow-hidden">
+        <div className="flex max-md:flex-col flex-1 overflow-auto relative">
+          <div className="flex flex-1 border-r flex-col overflow-hidden min-h-64">
             <EditorPanel
               language={getEditorLanguage(editorLanguage)}
               onChange={setValue}
               hasLoad
               defaultValue={value}
               id={1}
-              hasCopy={false}
               title={editorTitle}
               settingElement={editorSettingsElement}
               hasClear
               {...editorProps}
             />
           </div>
-          <div className="flex flex-1  relative">
+          <div className="flex flex-1 relative min-h-64">
             {showUpdateSpinner && (
               <div className="inline-flex absolute z-10 rounded-[50%] p-3 top-12 right-8">
                 <Spinner />
