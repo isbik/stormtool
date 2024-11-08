@@ -1,16 +1,10 @@
 import { EditorProps } from "@monaco-editor/react";
-import { Copy, CopyCheck, Trash, Upload, WandSparkles } from "lucide-react";
+import { Copy, CopyCheck, Trash, WandSparkles } from "lucide-react";
 import dynamic from "next/dynamic";
 import React, { useCallback, useEffect, useState } from "react";
 import { getWorker } from "../../shared/lib/worker-wrapper";
 import { useCopy } from "../../shared/hooks/use-copy";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../../shared/ui/popover";
-import { Input } from "../../shared/ui/input";
-import { Button } from "../../shared/ui/button";
+
 import { Uploader } from "./uploader";
 
 export interface EditorPanelProps {

@@ -5,9 +5,7 @@ import { json2xml } from "xml-js";
 
 export default function XmlToJson() {
   const transformer = useCallback<Transformer>(async ({ value }) => {
-    return json2xml(value, {
-      compact: true,
-    });
+    return json2xml(value, { compact: true, spaces: 4 });
   }, []);
 
   return (

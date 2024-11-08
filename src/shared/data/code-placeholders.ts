@@ -45,12 +45,19 @@ export const scss = `body {
   font-family: 'Lato', sans-serif;
 }
 .block {
-  font-weight: 700;
+  font-weight: 400;
   & a {
     color: red;
   }
-}
 }`;
+
+export const sass = `body 
+  font-family: 'Lato', sans-serif
+
+.block
+  font-weight: 400
+  & a
+    color: red`;
 
 export const css2 = `.alert {
   position: relative;

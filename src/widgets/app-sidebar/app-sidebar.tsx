@@ -4,19 +4,23 @@ import {
   SidebarHeader,
   SidebarContent,
   SidebarGroup,
-  SidebarFooter,
   Sidebar,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
 } from "@/shared/ui/sidebar";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { NavItem } from "./nav-item";
 import { Input } from "@/shared/ui/input";
+import Link from "next/link";
+import { cn } from "@/shared/lib/cn";
 
 export function AppSidebar() {
   const pathname = usePathname();
+
   const { value: pinned = [], set: setPinned } = useLocalStorage<string[]>(
     "pinned-tools",
     []
@@ -56,6 +60,25 @@ export function AppSidebar() {
         />
       </SidebarHeader>
       <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem className="group/item">
+                <SidebarMenuButton asChild isActive={pathname === "/dashboard"}>
+                  <Link
+                    href={"/dashboard"}
+                    className={cn("flex items-center rounded")}
+                  >
+                    <span className="overflow-hidden whitespace-nowrap text-ellipsis">
+                      Все инструменты
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
         {pinned.length > 0 && (
           <SidebarGroup>
             <SidebarGroupLabel>Избранное</SidebarGroupLabel>
@@ -106,7 +129,6 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
     </Sidebar>
   );
 }

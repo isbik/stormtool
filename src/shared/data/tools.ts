@@ -16,6 +16,8 @@ import {
   Clock,
   BetweenHorizonalEnd,
   Image,
+  GalleryThumbnailsIcon,
+  Images,
 } from "lucide-react";
 
 export const CONVERTER_TOOLS = [
@@ -66,6 +68,12 @@ export const CONVERTER_TOOLS = [
     name: "SCSS TO CSS",
     description: "Конвертирует SCSS код в CSS код",
     url: "/scss-to-css",
+    icon: Code,
+  },
+  {
+    name: "SASS TO CSS",
+    description: "Конвертирует SASS код в CSS код",
+    url: "/sass-to-css",
     icon: Code,
   },
 ];
@@ -167,6 +175,12 @@ export const OTHER_TOOLS = [
     name: "SQL formatter",
     description: "Форматирование SQL",
     icon: BetweenHorizonalEnd,
+  },
+  {
+    url: "https://picflow.com/image-converter",
+    name: "Image converter",
+    description: "Конвертер изображений",
+    icon: Images,
   },
 ];
 

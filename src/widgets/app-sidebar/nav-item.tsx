@@ -24,7 +24,7 @@ export const NavItem = ({
 
   return (
     <SidebarMenuItem className="group/item">
-      <SidebarMenuButton asChild>
+      <SidebarMenuButton asChild isActive={isActive}>
         <Link
           href={url}
           className={cn("flex items-center rounded")}
@@ -36,11 +36,12 @@ export const NavItem = ({
           </span>
         </Link>
       </SidebarMenuButton>
-      <SidebarMenuAction>
+      <SidebarMenuAction
+        onClick={() => {
+          onClickFavorite?.();
+        }}
+      >
         <Star
-          onClick={() => {
-            onClickFavorite?.();
-          }}
           className={cn(
             "size-3 shrink-0 sm:hidden group-hover/item:block",
             isFavorite && "fill-blue-500 stroke-blue-500"

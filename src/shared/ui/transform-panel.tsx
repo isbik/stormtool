@@ -61,8 +61,11 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
 
     useEffect(() => {
       async function transform() {
+        if (!value) return;
+
         try {
           toggleUpdateSpinner(true);
+
           const prettierWorker = getWorker(
             new Worker(
               new URL("../../workers/prettier.worker.ts", import.meta.url)

@@ -7,22 +7,24 @@ import * as sass from "sass";
 export default function SassToCss() {
   const transformer = useCallback<Transformer>(async ({ value }) => {
     try {
-      const result = await sass.compileStringAsync(value);
+      const result = await sass.compileStringAsync(value, {
+        syntax: "indented",
+      });
       return result.css;
     } catch (error) {
-      console.error("Ошибка компиляции SCSS:", error);
-      return "Ошибка компиляции SCSS";
+      console.error("Ошибка компиляции SASS:", error);
+      return "Ошибка компиляции SASS";
     }
   }, []);
 
   return (
     <ConversionPanel
       transformer={transformer}
-      editorTitle="SCSS to CSS"
+      editorTitle="SASS to CSS"
       editorLanguage="scss"
-      editorDefaultValue="scss"
+      editorDefaultValue="sass"
       resultTitle="css"
-      resultLanguage={"css"}
+      resultLanguage="css"
     />
   );
 }
