@@ -1,18 +1,12 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
 import { Switch } from "@/shared/ui/switch";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/shared/ui/tooltip";
-import { Moon, Sun, SunMoon } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import dynamic from "next/dynamic";
 import React from "react";
 
-export function ThemeSwitcher() {
+const ThemeSwitcherComponent = () => {
   const { theme, setTheme } = useTheme();
 
   function setLightTheme() {
@@ -35,4 +29,10 @@ export function ThemeSwitcher() {
       )}
     </Switch>
   );
-}
+};
+
+const ThemeSwitcher = dynamic(() => Promise.resolve(ThemeSwitcherComponent), {
+  ssr: false,
+});
+
+export { ThemeSwitcher };

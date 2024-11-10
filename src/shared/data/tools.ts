@@ -80,28 +80,34 @@ export const CONVERTER_TOOLS = [
 
 export const OTHER_TOOLS = [
   {
-    name: "URL parser",
+    name: "Парсинг URL",
     description: "Парсит URL адрес",
     url: "/url-parser",
     icon: Code,
   },
   {
-    name: "JWT decoder",
+    name: "JWT декодер",
     description: "Декодирует JWT токен",
     url: "/jwt",
     icon: Code,
   },
   {
-    name: "Text analyze",
+    name: "Анализ текста",
     description: "Анализирует текст",
     url: "/text-analyze",
     icon: WholeWord,
   },
   {
-    name: "Diff Text",
+    name: "Сравнение текста",
     description: "Выявляет различия между текстами",
     url: "/diff-text",
     icon: Text,
+  },
+  {
+    name: "Картинка в favicon",
+    description: "Картинка в favicon",
+    url: "/image-to-favicon",
+    icon: GalleryThumbnailsIcon,
   },
   {
     name: "Emoji",

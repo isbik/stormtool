@@ -16,9 +16,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru">
       <Head>
+        <meta name="description" content="Storm Tool" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#fff" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <body className={cn("min-h-dvh", inter.className)}>
         <ThemeProvider attribute="class">{children}</ThemeProvider>
