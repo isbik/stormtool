@@ -14,7 +14,6 @@ export interface EditorPanelProps {
   title: React.ReactNode;
   hasCopy?: boolean;
   hasPrettier?: boolean;
-  id: string | number;
   onChange?: (value: string) => void;
   hasLoad?: boolean;
   hasClear?: boolean;

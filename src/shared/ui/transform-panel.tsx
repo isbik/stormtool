@@ -105,7 +105,6 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
               onChange={setValue}
               hasLoad
               defaultValue={value}
-              id={1}
               title={editorTitle}
               settingElement={editorSettingsElement}
               hasClear
@@ -122,7 +121,6 @@ export const ConversionPanel: React.FunctionComponent<ConversionPanelProps> =
               title={resultTitle}
               defaultValue={result}
               language={getEditorLanguage(resultLanguage)}
-              id={3}
               editable={false}
               hasPrettier={false}
               settingElement={resultSettingsElement}
