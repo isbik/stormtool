@@ -16,7 +16,7 @@ export default function JSONToCSV() {
       const headers = Object.keys(jsonData[0]);
 
       const csvContent = [
-        headers.join(";"),
+        headers.map((key) => `"` + key + `"`).join(";"),
         ...jsonData.map((obj: Record<string, unknown>) =>
           headers
             .map((header) => {
@@ -25,6 +25,7 @@ export default function JSONToCSV() {
                 ? value.toString()
                 : value;
             })
+            .map((key) => `"` + key + `"`)
             .join(";")
         ),
       ].join("\n");
