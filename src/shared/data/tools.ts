@@ -47,6 +47,12 @@ export const CONVERTER_TOOLS = [
     icon: Code,
   },
   {
+    name: "JSON to CSV",
+    description: "Конвертирует файл JSON в CSV",
+    url: "/json-to-csv",
+    icon: Code,
+  },
+  {
     name: "XML to JSON",
     description: "Конвертирует файл XML в JSON",
     url: "/xml-to-json",

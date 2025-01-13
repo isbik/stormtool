@@ -2,7 +2,7 @@
 import { ConversionPanel, Transformer } from "@/shared/ui/transform-panel";
 import { useCallback } from "react";
 
-export default function XmlToJson() {
+export default function CSVToJson() {
   const transformer = useCallback<Transformer>(async ({ value }) => {
     const lines: string[] = value.split("\n");
     const keys: string[] = lines[0].split(",");
